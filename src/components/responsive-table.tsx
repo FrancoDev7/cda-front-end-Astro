@@ -46,18 +46,18 @@ export function ResponsiveTable() {
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold text-nowrap mb-1">Artículos Inventario</h1>
-      <p className="text-lg font-semibold mt-2 mb-2 ">Total de artículos: {total}</p>
-      <div className="flex justify-between mb-2">
+      <p className="text-lg font-semibold mt-3 mb-3 ">Total de artículos: {total}</p>
+      <div className="flex justify-between mb-3">
         <Input
           placeholder="Buscar artículos..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-[900px] h-[45px] "
         />
-        <Button className="bg-slate-900 h-[45px] text-white">Agregar Artículo</Button>
+        <Button className="bg-slate-900 h-[45px] transition-all  duration-300 hover:scale-105 text-white">Agregar Artículo</Button>
       </div>
       <div className="overflow-x-auto rounded-lg border">
-        <Table className="min-w-full">
+        <Table className="min-w-full shadow-md">
           <TableHeader>
             <TableRow>
               <TableHead className="w-[60px]">ID</TableHead>
@@ -104,13 +104,15 @@ export function ResponsiveTable() {
       {/* Paginación */}
       <div className="flex justify-between items-center mt-4">
       <Button
+          className="bg-slate-900 transition-all  duration-300 hover:scale-105 text-white"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         >
           Anterior
         </Button>
-        <span className="font-semibold text-slate-500 text-lg">Página {currentPage} de {totalPages}</span>
+        <span className="font-bold  text-lg">Página {currentPage} de {totalPages}</span>
         <Button
+          className="bg-slate-900 transition-all  duration-300 hover:scale-105 text-white"
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
         >
