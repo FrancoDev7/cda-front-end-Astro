@@ -1,0 +1,107 @@
+---
+import { MenuIcon ,ChartNoAxesCombined,PackageCheck, CircleArrowDown, CircleArrowUp,FileText,Settings,LogOut } from 'lucide-react';
+
+const menuItems = [
+  { label: 'Inicio', href: '/', icon: ChartNoAxesCombined },
+  { label: 'Artículos', href: '/articulos', icon: PackageCheck },
+  { label: 'Vale Entrada', href: '/vale-entrada', icon: CircleArrowUp },
+  { label: 'Vale Salida', href: '/vale-salida', icon: CircleArrowDown },
+  { label: 'Reportes', href: '/reportes', icon: FileText },
+  { label: 'Configuración', href: '/configuracion', icon: Settings },
+  { label: 'Cerrar Sesión', href: '/login', icon: LogOut },
+];
+
+const currentPath = Astro.url.pathname;
+ 
+const nombreUsuario = 'Francisco';
+---
+
+<!-- Sidebar para pantallas grandes -->
+<aside class="hidden w-64 border-r-8 bg-gray-100/40 dark:bg-gray-800/40 lg:block">
+  <div class="h-full py-6 pl-6 pr-6 overflow-y-auto">
+    <h2 class="mb-12 text-xl font-semibold">Bienvenido {nombreUsuario}</h2>
+    <nav class="flex flex-col space-y-3">
+      {menuItems.map(item => {
+        const isActive =
+          item.href === '/'
+            ? currentPath === '/'
+            : currentPath.startsWith(item.href);
+
+        const itemClass = [
+          'flex items-center justify-between rounded-lg px-3 py-2',
+          isActive
+            ? 'bg-slate-900 text-white'
+            : 'text-gray-900 dark:text-gray-100 hover:bg-slate-900 hover:text-white dark:hover:bg-gray-800',
+        ].join(' ');
+
+        return (
+          <a href={item.href} class={itemClass}>
+            <span class="mr-2">{item.label}</span>
+            {item.icon && <item.icon className="w-5 h-5" />}
+          </a>
+        );
+      })}
+    </nav>
+  </div>
+</aside>
+
+<!-- Drawer para pantallas pequeñas -->
+<div class="lg:hidden fixed left-4 top-4">
+  <button id="menuButton" class="outline-button h-10 w-10 p-2">
+    <MenuIcon className="h-6 w-6" />
+    <span class="sr-only">Abrir menú</span>
+  </button>
+</div>
+
+<div id="sidebarDrawer" class="fixed inset-0 z-50 hidden">
+  <div
+    class="absolute inset-0 bg-black opacity-50"
+    onclick="closeSidebar()"
+  ></div>
+  <div class="relative bg-white w-64 h-full p-6">
+    <h2 class="mb-4 text-lg font-semibold">Menú</h2>
+    <nav class="flex flex-col space-y-2">
+      {menuItems.map(item => {
+        const isActive =
+          item.href === '/'
+            ? currentPath === '/'
+            : currentPath.startsWith(item.href);
+
+        const itemClass = [
+          'flex items-center justify-between rounded-lg px-3 py-2',
+          isActive
+            ? 'bg-slate-950 text-white'
+            : 'text-gray-900 dark:text-gray-100 hover:bg-slate-950 hover:text-white dark:hover:bg-gray-800',
+        ].join(' ');
+
+        return (
+          <a
+            href={item.href}
+            class={itemClass}
+            onclick="closeSidebar()"
+          >
+            <span class="mr-2">{item.label}</span>
+            {item.icon && <item.icon className="w-5 h-5" />}
+          </a>
+        );
+      })}
+    </nav>
+  </div>
+</div>
+
+<!-- Scripts para manejar el sidebar -->
+<script>
+  const menuButton = document.getElementById('menuButton');
+  const sidebarDrawer = document.getElementById('sidebarDrawer');
+
+  function openSidebar() {
+    sidebarDrawer?.classList.remove('hidden');
+  }
+
+  function closeSidebar() {
+    sidebarDrawer?.classList.add('hidden');
+  }
+
+  menuButton?.addEventListener('click', openSidebar);
+  document.querySelector('#sidebarDrawer > .absolute')?.addEventListener('click', closeSidebar);
+</script>
