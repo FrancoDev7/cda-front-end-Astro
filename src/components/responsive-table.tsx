@@ -7,13 +7,6 @@ import { Button } from "@/components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { Input } from "@/components/ui/input"
 
-// const articles = [
-//   { id: 1, nombre: "Artículo 1", sap: "SAP001", sku: "SKU001", codigoInterno: "INT001", unidadMedida: "Unidad", precio: 100 },
-//   { id: 2, nombre: "Artículo 2", sap: "SAP002", sku: "SKU002", codigoInterno: "INT002", unidadMedida: "Kg", precio: 200 },
-//   { id: 3, nombre: "Artículo 3", sap: "SAP003", sku: "SKU003", codigoInterno: "INT003", unidadMedida: "Litro", precio: 150 },
-//   { id: 4, nombre: "Artículo 4", sap: "SAP004", sku: "SKU004", codigoInterno: "INT004", unidadMedida: "Unidad", precio: 300 },
-//   { id: 5, nombre: "Artículo 5", sap: "SAP005", sku: "SKU005", codigoInterno: "INT005", unidadMedida: "Kg", precio: 250 },
-// ]
 
 export function ResponsiveTable() {
   const { articles, total, isLoading, error, fetchArticles } = getArticulos()
@@ -45,9 +38,9 @@ export function ResponsiveTable() {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold text-nowrap mb-1">Artículos Inventario</h1>
-      <p className="text-lg font-semibold mt-3 mb-3 ">Total de artículos: {total}</p>
-      <div className="flex justify-between mb-3">
+      <h1 className="text-4xl font-bold text-nowrap mb-10">Artículos Inventario</h1>
+      {/* <p className="text-lg font-semibold mt-3 mb-3 ">Total de artículos: {total}</p> */}
+      <div className="flex justify-between mb-10">
         <Input
           placeholder="Buscar artículos..."
           value={searchTerm}

@@ -52,6 +52,11 @@ const getArticulos = create<ArticleStore>((set) => ({
       set({ error: 'Error al obtener los artículos', isLoading: false });
     }
   },
+  
 }));
+
+
+// const createArticulo = create<ArticleStore>((set) => ({}))
+
 
 export default getArticulos;
