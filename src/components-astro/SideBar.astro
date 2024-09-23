@@ -2,24 +2,23 @@
 import { MenuIcon ,ChartNoAxesCombined,PackageCheck, CircleArrowDown, CircleArrowUp,FileText,Settings,LogOut } from 'lucide-react';
 
 const menuItems = [
-  { label: 'Inicio', href: '/', icon: ChartNoAxesCombined },
+  { label: 'Inicio', href: '/home', icon: ChartNoAxesCombined },
   { label: 'Artículos', href: '/articulos', icon: PackageCheck },
   { label: 'Vale Entrada', href: '/vale-entrada', icon: CircleArrowUp },
   { label: 'Vale Salida', href: '/vale-salida', icon: CircleArrowDown },
   { label: 'Reportes', href: '/reportes', icon: FileText },
   { label: 'Configuración', href: '/configuracion', icon: Settings },
-  { label: 'Cerrar Sesión', href: '/login', icon: LogOut },
+  // { label: 'Cerrar Sesión', href: '/login', icon: LogOut },
 ];
 
 const currentPath = Astro.url.pathname;
- 
-const nombreUsuario = 'Francisco';
+
 ---
 
 <!-- Sidebar para pantallas grandes -->
 <aside class="hidden w-64 border-r-8 bg-gray-100/40 dark:bg-gray-800/40 lg:block">
   <div class="h-full py-6 pl-6 pr-6 overflow-y-auto">
-    <h2 class="mb-12 text-xl font-semibold">Bienvenido {nombreUsuario}</h2>
+    <h2 id="welcomeMessage" class="mb-12 text-base font-semibold">Bienvenido </h2>
     <nav class="flex flex-col space-y-5">
       {menuItems.map(item => {
         const isActive =
@@ -42,6 +41,14 @@ const nombreUsuario = 'Francisco';
           </a>
         );
       })}
+ <!-- Botón de Cerrar Sesión -->
+      <button
+      id="logoutButton"
+      class="flex items-center justify-between rounded-lg px-3 py-2 text-gray-900 dark:text-gray-100 hover:bg-slate-900 hover:text-white transition-all duration-300 hover:scale-105"
+      >
+      <span class="mr-2">Cerrar Sesión</span>
+      <LogOut className="w-5 h-5" />
+      </button>
     </nav>
   </div>
 </aside>
@@ -87,6 +94,16 @@ const nombreUsuario = 'Francisco';
           </a>
         );
       })}
+       <!-- Botón de Cerrar Sesión -->
+       <button
+        id="logoutButton"
+        onclick="logout(); closeSidebar();"
+        class="flex items-center justify-between rounded-lg px-3 py-2 text-gray-900 dark:text-gray-100 hover:bg-slate-950 hover:text-white transition-all duration-300 hover:scale-105"
+      >
+       <span class="mr-2">Cerrar Sesión</span>
+       <LogOut className="w-5 h-5" />
+     </button>
+     </button>
     </nav>
   </div>
 </div>
@@ -106,4 +123,45 @@ const nombreUsuario = 'Francisco';
 
   menuButton?.addEventListener('click', openSidebar);
   document.querySelector('#sidebarDrawer > .absolute')?.addEventListener('click', closeSidebar);
+
+  // Función para obtener el nombre del usuario desde el token
+  
+  // Re-inicializar tu script aquí
+
+    function getUserNameFromToken() {
+      const token = localStorage.getItem('token');
+      if (!token) return null;
+
+      try {
+        const payloadBase64 = token.split('.')[1];
+        const payloadJson = atob(payloadBase64);
+        const payload = JSON.parse(payloadJson);
+        console.log(payload);
+        return payload.fullName || null;
+      } catch (e) {
+        console.error('Error al decodificar el token:', e);
+        return null;
+      }
+    }
+
+    // Actualizar el mensaje de bienvenida
+    const nombreUsuario = getUserNameFromToken() || 'Invitado';
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    if (welcomeMessage) {
+      welcomeMessage.textContent = `Bienvenido ${nombreUsuario}`;
+    }
+
+    // Función para manejar el cierre de sesión
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = '/'; // Cambia la ruta si es necesario
+    }
+
+    // Agregar evento al botón de cerrar sesión
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+      logoutButton.addEventListener('click', logout);
+    }
+
+
 </script>

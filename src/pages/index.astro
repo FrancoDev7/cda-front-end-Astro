@@ -1,8 +1,23 @@
 ---
-import MainLayout from '@/layouts/MainLayout.astro'
-import '../styles/globals.css'
----
+import { LoginFormComponent } from '@/components/login-form';
+import '@/styles/globals.css'
 
-<MainLayout title="Inicio">
-  <h1 class="text-2xl font-bold">Inicio</h1>
-</MainLayout>
+const title = 'Iniciar Sesión';
+
+---
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/Logo-PSINet-ico.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	
+	</head>
+	<body class="  ">
+    <LoginFormComponent client:load />
+      
+  
+	</body>
+</html>
+<!-- <LoginFormComponent client:load /> -->
